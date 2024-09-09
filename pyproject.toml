@@ -1,0 +1,22 @@
+[project]
+name = "codebusters-leonardo"
+version = "0.1.0"
+description = "Leonardo 2024 Challenge CodeBusters notebook"
+authors = [
+    { name = "Matteo Savariso", email = "matteo.savariso@gmail.com" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "pandas==2.3.3",
+    "pillow==12.2.0",
+    "scikit-learn==1.7.2",
+    "torch==2.11.0",
+    "torchvision==0.26.0",
+    "tqdm==4.67.3",
+    "transformers==5.8.0",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel==7.2.0",
+]
