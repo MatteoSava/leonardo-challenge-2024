@@ -1,7 +1,7 @@
 [project]
-name = "codebusters-leonardo"
+name = "leonardo-challenge-2024"
 version = "0.1.0"
-description = "Leonardo 2024 Challenge CodeBusters notebook"
+description = "Leonardo Challenge 2024 multimodal learning notebook"
 authors = [
     { name = "Matteo Savariso", email = "matteo.savariso@gmail.com" }
 ]
