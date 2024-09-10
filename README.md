@@ -1,70 +1,59 @@
 # Leonardo Challenge 2024
 
-Notebook della challenge di multimodal learning del Sapienza Training Camp organizzato con Leonardo Company S.p.A.
+Multimodal learning challenge notebook from the Sapienza Training Camp organized with Leonardo Company S.p.A.
 
-## Dettagli
+## Details
 
-- Evento: Sapienza Training Camp - Leonardo Company S.p.A.
-- Periodo: 4-6 settembre 2024
-- Titolo: Multimodal Learning from Language and Vision Processing Neural Networks
-- Team: CodeBusters
-- Risultato: secondo posto
-
-Traduzione sportiva del risultato: primo posto mancato per lo 0.001%, quindi ufficialmente "abbiamo perso per un capello". Ufficiosamente, il capello aveva un buon modello di ensemble.
+- **Event:** Sapienza Training Camp — Leonardo Company S.p.A.
+- **Date:** September 4–6, 2024
+- **Topic:** Multimodal Learning from Language and Vision Processing Neural Networks
+- **Team:** CodeBusters
+- **Result:** 2nd place
 
 ## Challenge
 
-La challenge richiedeva di costruire un modello di multimodal learning per classificare il contesto nascosto di esempi descritti da piu' modalita' informative:
+The task was to build a multimodal classifier that predicts a hidden context from multiple input modalities:
 
-- un'immagine dell'oggetto;
-- il nome dell'oggetto;
-- una descrizione testuale;
-- una label target a 4 classi.
+- an image of the object
+- the object name
+- a text description
+- a 4-class target label
 
-In pratica, dato un dataset multimodale, bisognava predire una tra quattro classi usando testo, immagini e informazioni sull'oggetto rappresentato. Il rischio principale era che il modello si appoggiasse troppo all'oggetto esplicito, invece di catturare il vero segnale del contesto nascosto.
+Given this multimodal dataset, the goal was to predict one of four classes using text, images and object metadata. The main risk was the model relying too heavily on the explicit object identity instead of capturing the actual hidden-context signal.
 
-Il notebook assume questa struttura dati locale:
+The notebook expects this local data layout:
 
-```text
-dataset/
-  train.csv
-  test.csv
-  images/
-    train/
-    test/
-```
+    dataset/
+      train.csv
+      test.csv
+      images/
+        train/
+        test/
 
-Il dataset non e' incluso nel repository.
+The dataset is not included in this repository.
 
-## Soluzione
+## Solution
 
-La soluzione usa un classificatore multimodale in PyTorch:
+The solution is a multimodal classifier built in PyTorch:
 
-- `ViTModel` (`google/vit-base-patch16-224-in21k`) per estrarre feature visuali;
-- `GPT2Model` e `GPT2Tokenizer` per codificare nome oggetto + descrizione;
-- rappresentazioni dell'oggetto disponibili nel dataset;
-- normalizzazione delle feature visuali e testuali;
-- concatenazione delle due rappresentazioni;
-- piccolo classificatore fully connected per predire una delle 4 classi.
+- `ViTModel` (`google/vit-base-patch16-224-in21k`) for visual feature extraction
+- `GPT2Model` + `GPT2Tokenizer` to encode object name + description
+- Normalization of visual and text representations
+- Concatenation of the two feature vectors
+- Small fully-connected classifier head for 4-class prediction
 
-Il training usa `AdamW`, validazione 90/10 sul training set e salvataggio del miglior modello su validation accuracy. Il notebook genera infine `submission.csv` per l'invio alla leaderboard.
+Training uses `AdamW` with a 90/10 train/validation split, saving the best model on validation accuracy. The notebook produces a `submission.csv` for the competition leaderboard.
 
-Un punto interessante della soluzione era il ragionamento sulla ridondanza dell'oggetto: siccome l'oggetto era gia' rappresentato in modo esplicito, aveva senso provare a rimuovere o compensare quella informazione dagli embedding testuali e visivi, cosi' da spingere il modello verso il target reale della challenge, cioe' il contesto.
+An interesting aspect of the solution was reasoning about object redundancy: since the object was already explicitly represented in the input, it made sense to try compensating for that information in the text and visual embeddings, pushing the model toward the actual target — the hidden context.
 
-## Descrizione breve
+## Usage
 
-Partecipazione al Sapienza Training Camp organizzato con Leonardo Company, sviluppando un modello di apprendimento multimodale per la classificazione di contesti a partire da rappresentazioni testuali e visive. Realizzata un'architettura in PyTorch che combinava embedding testuali da GPT-2 e feature visive da Vision Transformer tramite proiezioni, normalizzazione e feature fusion neurale. Secondo posto con il team CodeBusters.
+Install the environment with pinned dependencies:
 
-## Uso
+    uv sync --dev
 
-Installa l'ambiente con dipendenze bloccate:
+Then open `Leonardo Challenge 2024.ipynb` in your notebook environment using the project kernel.
 
-```bash
-uv sync --dev
-```
+## Notes
 
-Poi apri `Leonardo Challenge 2024.ipynb` nel tuo ambiente notebook usando il kernel del progetto.
-
-## Note
-
-Questo repo e' volutamente semplice: contiene l'artefatto della challenge, le dipendenze bloccate e il contesto minimo per capire come e' stata risolta.
+This repo is intentionally minimal: it contains the challenge artifact, pinned dependencies and the context needed to understand the approach.

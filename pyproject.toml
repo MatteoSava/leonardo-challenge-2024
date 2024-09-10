@@ -3,9 +3,9 @@ name = "leonardo-challenge-2024"
 version = "0.1.0"
 description = "Leonardo Challenge 2024 multimodal learning notebook"
 authors = [
-    { name = "Matteo Savariso", email = "matteo.savariso@gmail.com" }
+    { name = "Matteo Sava" }
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.10,<3.14"
 dependencies = [
     "pandas==2.3.3",
     "pillow==12.2.0",
